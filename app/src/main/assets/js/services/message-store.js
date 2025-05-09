@@ -80,4 +80,22 @@ class MessageStore {
         }
     }
 
+    async cleanupOldMessages() {
+        // Remove messages older than 30 days
+        const thirtyDaysAgo = Date.now() - (30 * 24 * 60 * 60 * 1000);
+        const transaction = this.db.transaction(['messages'], 'readwrite');
+        const store = transaction.objectStore('messages');
+        const index = store.index('timestamp');
+        
+        const range = IDBKeyRange.upperBound(thirtyDaysAgo);
+        await index.openCursor(range).then(function deleteOldMessages(cursor) {
+            if (!cursor) return;
+            cursor.delete();
+            return cursor.continue().then(deleteOldMessages);
+        });
+    }
+}
+
+export default MessageStore;
+
         
