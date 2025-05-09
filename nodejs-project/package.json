@@ -1,0 +1,7 @@
+{
+  "name": "epher-backend",
+  "dependencies": {
+    "hyperswarm": "^5.0.0",
+    "hyperbeam": "^2.0.0"
+  }
+}
