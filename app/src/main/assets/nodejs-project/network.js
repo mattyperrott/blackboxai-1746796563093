@@ -189,14 +189,6 @@ class NetworkManager {
         }
     }
 
-    handlePeerDisconnect(beam) {
-        this.sockets.delete(beam);
-        if (this.sockets.size === 0) {
-            this.isConnected = false;
-            this.attemptReconnect();
-        }
-    }
-
     attemptReconnect() {
         if (this.reconnectTimer) return;
         
